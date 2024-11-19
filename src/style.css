@@ -1,0 +1,172 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+.m-top {
+  margin-top: 20px;
+}
+
+.logo {
+  text-align: center;
+}
+
+#app {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.logo h1 {
+  display: none;
+}
+
+/* Asegúrate de que el botón tenga un fondo y color visibles */
+.logout-button {
+  background-color: #6B345E;
+  /* Color atractivo para el botón */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  /* Asegúrate de que el botón esté visible */
+}
+
+/* Asegura que el color cambie al hacer hover */
+.logout-button:hover {
+  background-color: #42223A;
+  /* Cambio de color cuando se pasa el mouse */
+}
+
+/* Estilo general para el menú de navegación */
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  text-decoration: none;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  color: #6B345E;
+}
+
+.nav-link:hover {
+  background-color: #f1f1f1;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  color: #333;
+  flex-direction: column;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 10px;
+}
+
+.d-flex {
+  display: flex;
+  gap: 20px;
+}
+
+.d-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+h1 {
+  text-align: center;
+  color: #6B345E;
+}
+
+p {
+  margin: 0;
+}
+
+input,
+textarea {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+button.btn-primary {
+  background-color: #6B345E;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+}
+
+button.btn-secondary {
+  color: #6B345E;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  border: 1px solid #6B345E;
+}
+
+button:hover {
+  background-color: #42223A;
+  color: #FFFFFF;
+}
+
+.link {
+  background-color: transparent;
+  border: 0;
+  color: #6B345E;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#posts {
+  margin-top: 20px;
+}
+
+#posts div {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #fafafa;
+}
+
+#posts h3 {
+  color: #333;
+}
+
+#posts p {
+  margin: 5px 0;
+}
