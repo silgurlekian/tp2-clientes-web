@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { auth } from '../firebase'; // Solo importamos auth y Firestore
+import { auth } from '../firebase';
 import { db } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { updatePassword, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
@@ -42,7 +42,6 @@ export default {
       currentPassword: '',
       newPassword: '',
       profileImageUrl: '',
-      imageFile: null,
     };
   },
   async mounted() {
@@ -58,52 +57,19 @@ export default {
     }
   },
   methods: {
+    // Manejar la carga de la imagen y convertirla a Base64
     handleImageUpload(event) {
-      this.imageFile = event.target.files[0];
-      this.compressImage(this.imageFile);
-    },
-
-    // Comprimir la imagen usando un canvas
-    compressImage(file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-          const maxWidth = 300; // Ajusta el tamaño según tus necesidades
-          const maxHeight = 300;
-
-          // Calcular la proporción de la imagen para ajustarla al tamaño máximo
-          let width = img.width;
-          let height = img.height;
-
-          if (width > height) {
-            if (width > maxWidth) {
-              height *= maxWidth / width;
-              width = maxWidth;
-            }
-          } else {
-            if (height > maxHeight) {
-              width *= maxHeight / height;
-              height = maxHeight;
-            }
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-
-          // Dibujar la imagen comprimida en el canvas
-          ctx.drawImage(img, 0, 0, width, height);
-
-          // Convertir la imagen comprimida en Base64
-          this.profileImageUrl = canvas.toDataURL('image/jpeg', 0.7); // Ajusta la calidad (0.7 es un buen valor)
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          this.profileImageUrl = reader.result; // Convertir la imagen a Base64
         };
-        img.src = reader.result;
-      };
-      reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
+      }
     },
 
+    // Actualizar el perfil del usuario
     async updateProfile() {
       const user = auth.currentUser;
 
@@ -158,5 +124,6 @@ export default {
   height: 100px;
   object-fit: cover;
   border-radius: 50%;
+  border: 2px solid #ccc;
 }
 </style>

@@ -9,15 +9,19 @@
         <p>
           <textarea v-model="post.content" placeholder="Contenido del post"></textarea>
         </p>
+
+        <div>
+          <label for="postImage">Imagen de la publicación</label>
+          <input type="file" id="postImage" @change="(event) => handleImageUpload(post, event)" />
+        </div>
       </div>
 
       <div v-else>
         <h3>{{ post.title }}</h3>
-        <div v-if="post.imageUrl">
-          <img :src="post.imageUrl" alt="Imagen de publicación" />
+        <div v-if="post.imageBase64">
+          <img :src="post.imageBase64" alt="Imagen de publicación" class="post-image" />
         </div>
-        <p>{{ post.content }}</p>
-
+        <p class="m-top">{{ post.content }}</p>
       </div>
 
       <p><strong>Publicado por: {{ post.authorEmail }}</strong></p>
@@ -42,7 +46,7 @@
 </template>
 
 <script>
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, doc, getDoc, updateDoc, onSnapshot, addDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
 export default {
@@ -63,6 +67,7 @@ export default {
       this.posts = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
+        imageBase64: doc.data().imageBase64 || '',
         comments: [],
         isEditing: false,
       }));
@@ -84,15 +89,41 @@ export default {
 
     // Guardar los cambios del post
     async savePost(post) {
+      // Actualizar solo si se cambian los datos
+      await this.updatePost(post);
+    },
+
+    // Actualizar el post en Firestore
+    async updatePost(post) {
       const postRef = doc(db, 'posts', post.id);
+
+      // Crear objeto para actualizar datos
+      const updatedData = {
+        title: post.title,
+        content: post.content,
+      };
+
+      if (post.imageBase64) {
+        updatedData.imageBase64 = post.imageBase64;
+      }
+
       try {
-        await updateDoc(postRef, {
-          title: post.title,
-          content: post.content,
-        });
+        await updateDoc(postRef, updatedData);
         post.isEditing = false;
       } catch (error) {
         alert('Error al guardar los cambios: ' + error.message);
+      }
+    },
+
+    // Manejar la carga de imágenes
+    handleImageUpload(post, event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          post.imageBase64 = reader.result;
+        };
+        reader.readAsDataURL(file);
       }
     },
 
