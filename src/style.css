@@ -32,10 +32,8 @@ body {
   display: none;
 }
 
-/* Asegúrate de que el botón tenga un fondo y color visibles */
 .logout-button {
   background-color: #6B345E;
-  /* Color atractivo para el botón */
   color: white;
   border: none;
   padding: 8px 12px;
@@ -43,16 +41,12 @@ body {
   border-radius: 5px;
   transition: background-color 0.3s ease;
   display: inline-block;
-  /* Asegúrate de que el botón esté visible */
 }
 
-/* Asegura que el color cambie al hacer hover */
 .logout-button:hover {
   background-color: #42223A;
-  /* Cambio de color cuando se pasa el mouse */
 }
 
-/* Estilo general para el menú de navegación */
 .nav-links {
   display: flex;
   justify-content: space-between;
@@ -174,4 +168,10 @@ button:hover {
 
 #posts p {
   margin: 5px 0;
+}
+
+.post-image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
 }

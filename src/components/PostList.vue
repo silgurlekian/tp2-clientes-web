@@ -13,15 +13,18 @@
 
       <div v-else>
         <h3>{{ post.title }}</h3>
+        <div v-if="post.imageUrl">
+          <img :src="post.imageUrl" alt="Imagen de publicación" />
+        </div>
         <p>{{ post.content }}</p>
+
       </div>
 
-      <!-- Información adicional -->
       <p><strong>Publicado por: {{ post.authorEmail }}</strong></p>
 
       <div class="m-top">
-        <!-- El botón de editar solo aparece si el usuario es el autor del post -->
-        <button v-if="!post.isEditing && post.authorEmail === userEmail" @click="startEditing(post)" class="btn-primary">Editar</button>
+        <button v-if="!post.isEditing && post.authorEmail === userEmail" @click="startEditing(post)"
+          class="btn-primary">Editar</button>
         <button v-if="post.isEditing" @click="savePost(post)" class="btn-primary">Guardar</button>
       </div>
 
@@ -39,7 +42,7 @@
 </template>
 
 <script>
-import { collection, onSnapshot, addDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, onSnapshot } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
 export default {
@@ -47,7 +50,7 @@ export default {
     return {
       posts: [],
       newComment: {},
-      userEmail: null, 
+      userEmail: null,
     };
   },
   mounted() {
@@ -61,7 +64,7 @@ export default {
         id: doc.id,
         ...doc.data(),
         comments: [],
-        isEditing: false, 
+        isEditing: false,
       }));
 
       // Obtener los comentarios de cada post
@@ -87,7 +90,7 @@ export default {
           title: post.title,
           content: post.content,
         });
-        post.isEditing = false; 
+        post.isEditing = false;
       } catch (error) {
         alert('Error al guardar los cambios: ' + error.message);
       }
@@ -113,3 +116,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+img {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+</style>
