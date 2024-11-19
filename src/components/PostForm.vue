@@ -4,7 +4,7 @@
     <form @submit.prevent="createPost">
       <input v-model="title" placeholder="Título" required />
       <textarea v-model="content" placeholder="Contenido" required></textarea>
-      <button type="submit">Publicar</button>
+      <button type="submit" class="btn-primary">Publicar</button>
     </form>
   </div>
 </template>
@@ -15,22 +15,33 @@ import { db, auth } from '../firebase';
 
 export default {
   data() {
-    return { title: '', content: '' };
+    return {
+      title: '',
+      content: '',
+    };
   },
   methods: {
+    // Método para crear una nueva publicación en Firestore
     async createPost() {
       const user = auth.currentUser;
-      if (!user) return alert('Inicia sesión para publicar.');
-      await addDoc(collection(db, 'posts'), {
-        title: this.title,
-        content: this.content,
-        authorEmail: user.email,
-        timestamp: new Date(),
-      });
-      this.title = '';
-      this.content = '';
-      alert('Publicación creada');
-      this.$router.push('/posts');
+      if (!user) {
+        return alert('Inicia sesión para publicar.');
+      }
+
+      try {
+        await addDoc(collection(db, 'posts'), {
+          title: this.title,
+          content: this.content,
+          authorEmail: user.email,
+          timestamp: new Date(),
+        });
+        this.title = '';
+        this.content = '';
+        alert('Publicación creada');
+        this.$router.push('/posts'); 
+      } catch (error) {
+        alert('Error al crear la publicación: ' + error.message);
+      }
     },
   },
 };

@@ -1,4 +1,4 @@
-# Nombre del Proyecto
+# Cepante
 
 Este proyecto es una aplicación web que permite a los usuarios registrarse, iniciar sesión, crear publicaciones y comentar en ellas.
 
